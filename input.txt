@@ -1,0 +1,8 @@
+int main ( ) {
+int a , dsf , c , ca , ds , ll , l ;
+float d , k ;
+a = 1 / ( k * a ) ;
+d = k ;
+a = k ;
+return c ;
+}
