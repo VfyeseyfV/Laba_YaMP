@@ -7,7 +7,7 @@
 #include <stdexcept>
 #include <fstream>
 #include "lexAnalizator.h"
-//#include "HashTab.cpp"
+#include "HashTab.cpp"
 
 struct TreeNode {
     std::string rule;
@@ -26,8 +26,10 @@ class Parser {
 public:
     Parser(const std::string& input);
     void parse();
+    Hash_tab tab;
     void printTree(std::ostream& os, TreeNode* node, int indent = 0) const;
     TreeNode* getRoot() const; // ƒобавл€ем метод дл€ получени€ корневого узла
+    void printError(string message);
 
 private:
     std::string input;
@@ -37,7 +39,8 @@ private:
     size_t column;
     TreeNode* root;
     Lexer lexer;
-
+    string determineRightSideType(const std::vector<std::string>& lexemes);
+    
     void get_next_lexem();
     TreeNode* Function();
     TreeNode* Begin(); 
@@ -48,8 +51,8 @@ private:
     TreeNode* Operators();
     TreeNode* OperatorsPrime();
     TreeNode* Descr();
-    TreeNode* VarList();
-    TreeNode* VarListPrime();
+    TreeNode* VarList(string s);
+    TreeNode* VarListPrime(string s);
     TreeNode* Type();
     TreeNode* Op();
     TreeNode* SimpleExpr();

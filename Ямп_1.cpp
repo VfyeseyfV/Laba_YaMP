@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
-#include "HashTab.cpp"
+//#include "HashTab.cpp"
 #include "SyntAnalizator.h"
 
 
@@ -17,6 +17,8 @@ int main() {
     std::ifstream in("C:/Users/Win10gpt/source/repos/╦рср_▀ья_1/╦рср_▀ья_1/input.txt");
     std::ofstream out("C:/Users/Win10gpt/source/repos/╦рср_▀ья_1/╦рср_▀ья_1/output.txt");
     Hash_tab tab(10000);
+
+
     vector <string> Musor;
     string text, str;
     while (in >> str) {
@@ -26,13 +28,13 @@ int main() {
     int k;
     //tab.read_all_Tokens(text, Musor);
     
-    string input = "int main ( ) { int d ; int a , b ; a = ( ( 3.234 ) - 3 * 4 ) ; return a ; } ";
+    string input = "int main ( ) { int d ; float d , d ; a = ( ( 3.234 ) - 3 * 4 ) ; return a ; } ";
     Parser parser(text);
     try {
         parser.parse();
-        std::ofstream output("output.txt");
-        parser.printTree(output, parser.getRoot());
-        output.close();
+        //std::ofstream output("output.txt");
+        //parser.printTree(output, parser.getRoot());
+        //output.close();
     }
     catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;

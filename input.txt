@@ -1,8 +1,7 @@
 int main ( ) {
-int a , dsf , c , ca , ds , ll , l ;
-float d , k ;
-a = 1 / ( k * a ) ;
-d = k ;
-a = k ;
-return c ;
+int a , sd , ds , ll , l ;
+float gg , c ;
+c = 2.5 - 34.3 % c + 2.3 * c ;
+a = a * ( 12 + a ) ;
+return a ;
 }
