@@ -260,7 +260,7 @@ TreeNode* Parser::Op() {
     // ѕровер€ем, что тип выражени€ справа от '=' совпадает с типом переменной слева
     for (const auto& type : rightSideTypes) {
         if (leftType != type && !typeMismatchErrorPrinted) {
-            printError("Type mismatch: left side is '" + leftType + "', but right side contains '" + type + "'");
+            printError("Types are different: left side is '" + leftType + "', but right '" + type + "'");
             typeMismatchErrorPrinted = true; // ”станавливаем флаг, чтобы больше не выводить ошибку
         }
     }
@@ -343,9 +343,13 @@ TreeNode* Parser::TermPrime() {
         get_next_lexem();
         node->children.push_back(Term());
         node->Tr = node->children[1]->Tr + " " + s;
-
-        // ƒобавл€ем тип следующего операнда в вектор
-        rightSideTypes.push_back(node->children[1]->Type);
+        if (s == "%") {
+            rightSideTypes.push_back("int");
+        }
+        else {
+            // ƒобавл€ем тип следующего операнда в вектор
+            rightSideTypes.push_back(node->children[1]->Type);
+        }
 
         return node;
     }
@@ -395,9 +399,9 @@ TreeNode* Parser::SimpleExpr() {
         node->children.push_back(Expr());
 
         // ѕровер€ем, что типы совпадают
-        if (node->children[1]->Type != node->children[1]->Type) {
+        /*if (node->children[1]->Type != node->children[1]->Type) {
             error("Type mismatch in expression");
-        }
+        }*/
 
         if (lexeme != ")") error("Expected ')'");
         node->children.push_back(new TreeNode(lexeme));
@@ -421,7 +425,7 @@ string Parser::determineRightSideType(const std::vector<std::string>& lexemes) {
         // ≈сли тип лексемы уже определен, провер€ем совместимость
         if (type != "") {
             if (type != currentType) {
-                printError ("Type mismatch in right side expression: " + type + " vs " + currentType );
+                printError ("Types are different in right side: " + type + " vs " + currentType );
             }
         }
         // »наче устанавливаем тип лексемы
@@ -432,7 +436,7 @@ string Parser::determineRightSideType(const std::vector<std::string>& lexemes) {
 
     // ≈сли тип не определен, выбрасываем ошибку
     if (type == "") {
-        printError ("Right side expression has no type");
+        printError ("Right side has no type");
     }
 
     return type;
@@ -477,4 +481,4 @@ void Parser::printTree(std::ostream& os, TreeNode* node, int indent) const {
     for (int i = 0; i < indent; ++i) os << "     ";
     os << node->rule << std::endl;
     for (auto child : node->children) printTree(os, child, indent + 1);
-}// ак сделать так, чтобы в выражении сравнивались типы левой части и всей правой части, а не так как сейчас(сейчас только первый операнд после = )
+}
